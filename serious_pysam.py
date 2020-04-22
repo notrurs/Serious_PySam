@@ -7,21 +7,21 @@ from hero import Hero
 from kamikaze import Kamikaze
 from bullet import Bullet
 from text_object import TextObject
+from menu import MainMenu
 
 
 class SeriousPySam(Game):
     def __init__(self):
         Game.__init__(self, c.window_caption, c.screen_width, c.screen_height, c.background_image, c.frame_rate)
         self.score = 0
-        self.is_game_running = False
         self.hero = None
+        self.pause_menu = None
         self.create_objects()
 
     def create_objects(self):
         self.create_hero()
         self.create_enemy(c.enemy_count)
         self.create_labels()
-        self.create_menu()
 
     def create_hero(self):
         hero = Hero(c.screen_width // 5,
@@ -33,12 +33,14 @@ class SeriousPySam(Game):
         self.keydown_handlers[pygame.K_s].append(hero.handle)
         self.keydown_handlers[pygame.K_a].append(hero.handle)
         self.keydown_handlers[pygame.K_d].append(hero.handle)
+        self.keydown_handlers[pygame.K_ESCAPE].append(self.handle_pause_menu)
         self.mouse_handlers[pygame.MOUSEBUTTONDOWN].append(hero.handle_mouse)
 
         self.keyup_handlers[pygame.K_w].append(hero.handle)
         self.keyup_handlers[pygame.K_s].append(hero.handle)
         self.keyup_handlers[pygame.K_a].append(hero.handle)
         self.keyup_handlers[pygame.K_d].append(hero.handle)
+        self.keyup_handlers[pygame.K_ESCAPE].append(self.handle_pause_menu)
         self.mouse_handlers[pygame.MOUSEBUTTONUP].append(hero.handle_mouse)
 
         self.hero = hero
@@ -64,8 +66,26 @@ class SeriousPySam(Game):
                                  c.font_size)
         self.objects.append(score_label)
 
-    def create_menu(self):
-        pass
+    def resume_game(self):
+        self.pause_menu.toggle()
+        pygame.mixer.music.set_volume(c.music_volume)
+        self.channel_hero_fire.set_volume(c.hero_fire_volume)
+        self.channel_enemy_sound.set_volume(c.enemy_sound_volume)
+        self.channel_hero_dialog.set_volume(c.hero_dialog_volume)
+        self.update()
+
+    def handle_pause_menu(self, key):
+        if key == pygame.K_ESCAPE:
+            pygame.mixer.music.set_volume(c.music_volume / 4)
+            self.channel_enemy_sound.set_volume(0)
+            self.channel_hero_fire.set_volume(0)
+            self.channel_hero_dialog.set_volume(0)
+
+            self.pause_menu = MainMenu()
+            self.pause_menu.add_button('Продолжить игру', self.resume_game)
+            self.pause_menu.add_button('Завершить игру', self.create_main_menu)
+            self.pause_menu.add_button('Выход', self.pause_menu.event_quit)
+            self.pause_menu.mainloop(self.surface)
 
     def handle_bullets(self):
         if self.hero.state == 'fire':
@@ -105,8 +125,6 @@ class SeriousPySam(Game):
                     self.create_enemy()
 
     def update(self):
-        # if not self.is_game_running:
-        #     return
         self.handle_bullets()
         self.handle_bullets_collisions()
         self.garbage_collector()
