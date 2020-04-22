@@ -44,7 +44,7 @@ class SeriousPySam(Game):
         self.hero = hero
         self.objects.append(self.hero)
 
-    def create_enemy(self, count):
+    def create_enemy(self, count=1):
         enemies = [Kamikaze(randint(c.enemy_spawn_start_x, c.screen_width),
                             randint(0, c.enemy_spawn_end_y),
                             c.enemy_kamikaze_image,
@@ -102,7 +102,7 @@ class SeriousPySam(Game):
                     self.score += 100
                     self.kill_object(bullet)
                     self.kill_object(enemy)
-                    self.create_enemy(1)
+                    self.create_enemy()
 
     def update(self):
         # if not self.is_game_running:
