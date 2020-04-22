@@ -1,5 +1,7 @@
-import colors
 from pathlib import Path
+from random import choice
+
+import colors
 
 
 # Paths settings
@@ -43,6 +45,12 @@ hero_speed = 5
 hero_fire_image = str(IMAGES_DIR / 'hero_fire.png')
 hero_idle_image = str(IMAGES_DIR / 'hero_idle.png')
 hero_fire_volume = 0.4
+hero_dialog_volume = 1
+hero_start_level_dialogs = ['i_am_ready_for_some_serious_carnage.wav',
+                            'sam_i_am.wav',
+                            'say_hello_to_papa.wav',
+                            'seriously_is_that_the_best_you_can_do.wav']
+hero_start_level_random_dialog = str(HERO_DIR / choice(hero_start_level_dialogs))
 
 # Bullet settings
 bullet_speed = 10

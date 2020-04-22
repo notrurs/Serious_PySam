@@ -24,7 +24,9 @@ class Game:
         pygame.init()
         self.channel_hero_fire = pygame.mixer.Channel(0)
         self.channel_hero_fire.set_volume(c.hero_fire_volume)
-        self.channel_enemy_sound = pygame.mixer.Channel(1)
+        self.channel_hero_dialog = pygame.mixer.Channel(1)
+        self.channel_hero_dialog.set_volume(c.hero_dialog_volume)
+        self.channel_enemy_sound = pygame.mixer.Channel(2)
         self.channel_enemy_sound.set_volume(c.enemy_sound_volume)
         self.surface = pygame.display.set_mode((width, height))
         pygame.display.set_caption(caption)
@@ -62,6 +64,9 @@ class Game:
         pygame.mixer.music.load(c.music_fight)
         pygame.mixer.music.set_volume(c.music_volume)
         pygame.mixer.music.play(-1)
+
+        hero_start_sound = pygame.mixer.Sound(c.hero_start_level_random_dialog)
+        self.channel_hero_dialog.play(hero_start_sound)
 
         while not self.game_over:
             self.surface.blit(self.background_image, (0, 0))
