@@ -37,11 +37,9 @@ class MainMenu(Menu):
                       theme=_theme,
                       center_content=True)
         self.event_quit = events.EXIT
+        self.event_back = events.BACK
         _menu_sound = MenuSound()
         self.set_sound(_menu_sound, recursive=True)
-        music.load(c.menu_music)
-        music.set_volume(c.menu_music_volume)
-        music.play(-1)
 
 
 class MenuSound(Sound):
