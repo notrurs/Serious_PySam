@@ -1,5 +1,4 @@
-from pygame.mixer import music
-
+from pygame.mixer import Channel
 from pygame_menu import Menu
 from pygame_menu.themes import Theme
 from pygame_menu.baseimage import BaseImage
@@ -45,5 +44,6 @@ class MainMenu(Menu):
 class MenuSound(Sound):
     def __init__(self):
         Sound.__init__(self)
+        self._channel = Channel(3)
         self.set_sound(SOUND_TYPE_CLICK_MOUSE, c.menu_sound_click, volume=1)
         self.set_sound(SOUND_TYPE_WIDGET_SELECTION, c.menu_sound_select, volume=1)
