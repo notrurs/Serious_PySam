@@ -45,8 +45,8 @@ class SeriousPySam(Game):
         self.objects.append(self.hero)
 
     def create_enemy(self, count):
-        enemies = [Kamikaze(randint(710, c.screen_width),
-                            randint(0, c.screen_height - 45),
+        enemies = [Kamikaze(randint(c.enemy_spawn_start_x, c.screen_width),
+                            randint(0, c.enemy_spawn_end_y),
                             c.enemy_kamikaze_image,
                             c.enemy_speed,
                             c.enemy_kamikaze_sound,
