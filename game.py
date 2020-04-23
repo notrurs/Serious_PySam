@@ -35,6 +35,28 @@ class Game:
         self.keyup_handlers = defaultdict(list)
         self.mouse_handlers = defaultdict(list)
 
+    def reinitializied_game(self):
+        self.objects = []
+        self.enemies = []
+        self.bullets = []
+        self.channel_hero_fire = pygame.mixer.Channel(0)
+        self.channel_hero_dialog = pygame.mixer.Channel(1)
+        self.channel_enemy_sound = pygame.mixer.Channel(2)
+        self.channels_set_volume()
+        self.keydown_handlers = defaultdict(list)
+        self.keyup_handlers = defaultdict(list)
+        self.mouse_handlers = defaultdict(list)
+
+    def channels_set_volume(self, volume='default'):
+        if volume == 'default':
+            self.channel_hero_fire.set_volume(c.hero_fire_volume)
+            self.channel_hero_dialog.set_volume(c.hero_dialog_volume)
+            self.channel_enemy_sound.set_volume(c.enemy_sound_volume)
+        elif volume == 'mute':
+            self.channel_hero_fire.set_volume(0)
+            self.channel_hero_dialog.set_volume(0)
+            self.channel_enemy_sound.set_volume(0)
+
     def update(self):
         for o in self.objects:
             o.update()
@@ -65,7 +87,7 @@ class Game:
         pygame.mixer.music.set_volume(c.music_volume)
         pygame.mixer.music.play(-1)
 
-        hero_start_sound = pygame.mixer.Sound(c.hero_start_level_random_dialog)
+        hero_start_sound = pygame.mixer.Sound(c.hero_start_level_random_dialog())
         self.channel_hero_dialog.play(hero_start_sound)
 
         while not self.game_over:
