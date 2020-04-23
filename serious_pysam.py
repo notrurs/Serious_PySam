@@ -27,7 +27,9 @@ class SeriousPySam(Game):
         hero = Hero(c.screen_width // 5,
                     c.screen_height // 2,
                     c.hero_idle_image,
-                    c.hero_speed)
+                    c.hero_speed,
+                    c.hero_start_level_random_dialog(),
+                    self.channel_hero_dialog)
 
         self.keydown_handlers[pygame.K_w].append(hero.handle)
         self.keydown_handlers[pygame.K_s].append(hero.handle)
@@ -69,21 +71,24 @@ class SeriousPySam(Game):
     def resume_game(self):
         self.pause_menu.toggle()
         pygame.mixer.music.set_volume(c.music_volume)
-        self.channel_hero_fire.set_volume(c.hero_fire_volume)
-        self.channel_enemy_sound.set_volume(c.enemy_sound_volume)
-        self.channel_hero_dialog.set_volume(c.hero_dialog_volume)
+        self.channels_set_volume()
         self.update()
+
+    def finish_game(self):
+        self.channels_set_volume('mute')
+        self.reinitializied_game()
+        self.score = 0
+        self.create_objects()
+        self.create_main_menu()
 
     def handle_pause_menu(self, key):
         if key == pygame.K_ESCAPE:
             pygame.mixer.music.set_volume(c.music_volume / 4)
-            self.channel_enemy_sound.set_volume(0)
-            self.channel_hero_fire.set_volume(0)
-            self.channel_hero_dialog.set_volume(0)
+            self.channels_set_volume('mute')
 
             self.pause_menu = MainMenu()
             self.pause_menu.add_button('Продолжить игру', self.resume_game)
-            self.pause_menu.add_button('Завершить игру', self.create_main_menu)
+            self.pause_menu.add_button('Завершить игру', self.finish_game)
             self.pause_menu.add_button('Выход', self.pause_menu.event_quit)
             self.pause_menu.mainloop(self.surface)
 
