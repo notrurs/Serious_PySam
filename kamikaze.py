@@ -16,4 +16,4 @@ class Kamikaze(GameObject):
         self.play_sound()
 
     def play_sound(self):
-        self.channel.play(self.sound)
+        self.channel.queue(self.sound)
