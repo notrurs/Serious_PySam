@@ -5,8 +5,8 @@ from game_object import GameObject
 
 
 class Hero(GameObject):
-    def __init__(self, x, y, picture, speed):
-        GameObject.__init__(self, x, y, picture, speed)
+    def __init__(self, x, y, picture, speed, sound, channel):
+        GameObject.__init__(self, x, y, picture, speed, sound, channel)
         self.hero_idle = self.image_object
         self.hero_fire = pygame.image.load(c.hero_fire_image).convert_alpha()
         self.moving_left = False
