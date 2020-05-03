@@ -16,6 +16,7 @@ class SeriousPySam(Game):
         self.score = 0
         self.hero = None
         self.pause_menu = None
+        self.hero_handle_keys = [pygame.K_w, pygame.K_s, pygame.K_a, pygame.K_d]
         self.create_objects()
 
     def create_objects(self):
@@ -31,17 +32,13 @@ class SeriousPySam(Game):
                     c.hero_start_level_random_dialog(),
                     self.channel_hero_dialog)
 
-        self.keydown_handlers[pygame.K_w].append(hero.handle)
-        self.keydown_handlers[pygame.K_s].append(hero.handle)
-        self.keydown_handlers[pygame.K_a].append(hero.handle)
-        self.keydown_handlers[pygame.K_d].append(hero.handle)
+        for key in self.hero_handle_keys:
+            self.keydown_handlers[key].append(hero.handle)
+            self.keyup_handlers[key].append(hero.handle)
+
         self.keydown_handlers[pygame.K_ESCAPE].append(self.handle_pause_menu)
         self.mouse_handlers[pygame.MOUSEBUTTONDOWN].append(hero.handle_mouse)
 
-        self.keyup_handlers[pygame.K_w].append(hero.handle)
-        self.keyup_handlers[pygame.K_s].append(hero.handle)
-        self.keyup_handlers[pygame.K_a].append(hero.handle)
-        self.keyup_handlers[pygame.K_d].append(hero.handle)
         self.keyup_handlers[pygame.K_ESCAPE].append(self.handle_pause_menu)
         self.mouse_handlers[pygame.MOUSEBUTTONUP].append(hero.handle_mouse)
 
