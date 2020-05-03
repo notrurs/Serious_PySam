@@ -12,7 +12,7 @@ from menu import MainMenu
 
 class SeriousPySam(Game):
     def __init__(self):
-        Game.__init__(self, c.window_caption, c.screen_width, c.screen_height, c.background_image, c.frame_rate)
+        Game.__init__(self, c.WINDOW_CAPTION, c.WINDOW_WIDTH, c.WINDOW_HEIGHT, c.GAME_BACKGROUND_IMAGE, c.FRAME_RATE)
         self.score = 0
         self.hero = None
         self.pause_menu = None
@@ -20,14 +20,14 @@ class SeriousPySam(Game):
 
     def create_objects(self):
         self.create_hero()
-        self.create_enemy(c.enemy_count)
+        self.create_enemy(c.ENEMY_COUNT)
         self.create_labels()
 
     def create_hero(self):
-        hero = Hero(c.screen_width // 5,
-                    c.screen_height // 2,
-                    c.hero_idle_image,
-                    c.hero_speed,
+        hero = Hero(c.WINDOW_WIDTH // 5,
+                    c.WINDOW_HEIGHT // 2,
+                    c.HERO_IDLE_IMAGE,
+                    c.HERO_SPEED,
                     c.hero_start_level_random_dialog(),
                     self.channel_hero_dialog)
 
@@ -49,28 +49,28 @@ class SeriousPySam(Game):
         self.objects.append(self.hero)
 
     def create_enemy(self, count=1):
-        enemies = [Kamikaze(randint(c.enemy_spawn_start_x, c.screen_width),
-                            randint(0, c.enemy_spawn_end_y),
-                            c.enemy_kamikaze_image,
-                            c.enemy_speed,
-                            c.enemy_kamikaze_sound,
+        enemies = [Kamikaze(randint(c.ENEMY_SPAWN_START_X, c.WINDOW_WIDTH),
+                            randint(0, c.ENEMY_SPAWN_END_Y),
+                            c.ENEMY_KAMIKAZE_IMAGE,
+                            c.ENEMY_SPEED,
+                            c.ENEMY_KAMIKAZE_SOUND,
                             self.channel_enemy_sound) for enemy in range(count)]
         for enemy in enemies:
             self.objects.append(enemy)
             self.enemies.append(enemy)
 
     def create_labels(self):
-        score_label = TextObject(c.score_x,
-                                 c.score_y,
+        score_label = TextObject(c.LABEL_SCORE_X,
+                                 c.LABEL_SCORE_Y,
                                  lambda: f'Score: {self.score}',
-                                 c.text_color,
-                                 c.font_name,
-                                 c.font_size)
+                                 c.LABEL_TEXT_COLOR,
+                                 c.LABEL_FONT_NAME,
+                                 c.LABEL_FONT_SIZE)
         self.objects.append(score_label)
 
     def resume_game(self):
         self.pause_menu.toggle()
-        pygame.mixer.music.set_volume(c.music_volume)
+        pygame.mixer.music.set_volume(c.MUSIC_VOLUME)
         self.channels_set_volume()
         self.update()
 
@@ -83,7 +83,7 @@ class SeriousPySam(Game):
 
     def handle_pause_menu(self, key):
         if key == pygame.K_ESCAPE:
-            pygame.mixer.music.set_volume(c.music_volume / 4)
+            pygame.mixer.music.set_volume(c.MUSIC_VOLUME / 4)
             self.channels_set_volume('mute')
 
             self.pause_menu = MainMenu()
@@ -98,18 +98,18 @@ class SeriousPySam(Game):
             spawn_bullet_y = self.hero.rect.y + 21
             bullet = Bullet(spawn_bullet_x,
                             spawn_bullet_y,
-                            c.bullet_minigun_image,
-                            c.bullet_speed,
-                            c.bullet_minigun_sound)
+                            c.BULLET_MINIGUN_IMAGE,
+                            c.BULLET_SPEED,
+                            c.BULLET_MINIGUN_SOUND)
             self.objects.append(bullet)
             self.bullets.append(bullet)
             self.channel_hero_fire.play(bullet.sound)
 
     def garbage_collector(self):
         for obj in self.objects:
-            if not 0 <= obj.x <= c.screen_width:
+            if not 0 <= obj.x <= c.WINDOW_WIDTH:
                 self.kill_object(obj)
-            elif not 0 <= obj.y <= c.screen_height:
+            elif not 0 <= obj.y <= c.WINDOW_HEIGHT:
                 self.kill_object(obj)
 
     def kill_object(self, obj):

@@ -5,78 +5,78 @@ import colors
 
 
 # Paths settings
-BASE_DIR = Path.cwd()
-FONTS_DIR = BASE_DIR / 'fonts'
-IMAGES_DIR = BASE_DIR / 'images'
-SOUND_EFFECTS_DIR = BASE_DIR / 'sound_effects'
-ENEMIES_DIR = SOUND_EFFECTS_DIR / 'enemies'
-HERO_DIR = SOUND_EFFECTS_DIR / 'hero'
-MUSIC_DIR = SOUND_EFFECTS_DIR / 'music'
-OTHER_DIR = SOUND_EFFECTS_DIR / 'other'
-WEAPONS_DIR = SOUND_EFFECTS_DIR / 'weapons'
+_BASE_DIR = Path.cwd()
+_FONTS_DIR = _BASE_DIR / 'fonts'
+_IMAGES_DIR = _BASE_DIR / 'images'
+_SOUND_EFFECTS_DIR = _BASE_DIR / 'sound_effects'
+_ENEMIES_DIR = _SOUND_EFFECTS_DIR / 'enemies'
+_HERO_DIR = _SOUND_EFFECTS_DIR / 'hero'
+_MUSIC_DIR = _SOUND_EFFECTS_DIR / 'music'
+_OTHER_DIR = _SOUND_EFFECTS_DIR / 'other'
+_WEAPONS_DIR = _SOUND_EFFECTS_DIR / 'weapons'
 
 # General settings
-screen_width = 800
-screen_height = 533
-window_caption = 'Serious PySam'
-background_image = str(IMAGES_DIR / 'desert.png')
-frame_rate = 60
-music_fight = str(MUSIC_DIR / 'dunes_bfe.mp3')
-music_volume = 0.6
+WINDOW_WIDTH = 800
+WINDOW_HEIGHT = 533
+WINDOW_CAPTION = 'Serious PySam'
+GAME_BACKGROUND_IMAGE = str(_IMAGES_DIR / 'desert.png')
+FRAME_RATE = 60
+MUSIC_FIGHT = str(_MUSIC_DIR / 'dunes_bfe.mp3')
+MUSIC_VOLUME = 0.6
 
 # Menu settings
-menu_height = 800
-menu_width = 533
-menu_title = ''
-menu_background_image = str(IMAGES_DIR / 'bg_mainmenu.png')
-menu_font_color = colors.GREEN2
-menu_selection_color = colors.WHITE
-menu_title_font_color = colors.GREEN2
-menu_title_background_color = colors.GREEN3
-menu_background_color = colors.GREEN4
-menu_sound_click = str(OTHER_DIR / 'press.wav')
-menu_sound_select = str(OTHER_DIR / 'select.wav')
-menu_font_size = 49
-menu_music = str(MUSIC_DIR / 'HPeace.mp3')
-menu_music_volume = 0.3
+MENU_HEIGHT = WINDOW_HEIGHT
+MENU_WIDTH = WINDOW_WIDTH
+MENU_TITLE = ''
+MENU_BACKGROUND_IMAGE = str(_IMAGES_DIR / 'bg_mainmenu.png')
+MENU_FONT_COLOR = colors.GREEN2
+MENU_SELECTION_COLOR = colors.WHITE
+MENU_TITLE_FONT_COLOR = colors.GREEN2
+MENU_TITLE_BACKGROUND_COLOR = colors.GREEN3
+MENU_BACKGROUND_COLOR = colors.GREEN4
+MENU_SOUND_CLICK = str(_OTHER_DIR / 'press.wav')
+MENU_SOUND_SELECT = str(_OTHER_DIR / 'select.wav')
+MENU_FONT_SIZE = 49
+MENU_MUSIC = str(_MUSIC_DIR / 'HPeace.mp3')
+MENU_MUSIC_VOLUME = 0.3
+MENU_CONTROL_LABEL = '''Управление клавишами WASD, стрелять на ЛКМ.'''
 
 # Hero settings
-hero_speed = 5
-hero_fire_image = str(IMAGES_DIR / 'hero_fire.png')
-hero_idle_image = str(IMAGES_DIR / 'hero_idle.png')
-hero_fire_volume = 0.4
-hero_dialog_volume = 1
-hero_start_level_dialogs = ['i_am_ready_for_some_serious_carnage.wav',
+HERO_SPEED = 5
+HERO_FIRE_IMAGE = str(_IMAGES_DIR / 'hero_fire.png')
+HERO_IDLE_IMAGE = str(_IMAGES_DIR / 'hero_idle.png')
+HERO_FIRE_VOLUME = 0.4
+HERO_DIALOG_VOLUME = 1
+HERO_START_LEVEL_DIALOGS = ['i_am_ready_for_some_serious_carnage.wav',
                             'sam_i_am.wav',
                             'say_hello_to_papa.wav',
                             'seriously_is_that_the_best_you_can_do.wav']
 
 
 def hero_start_level_random_dialog():
-    return str(HERO_DIR / choice(hero_start_level_dialogs))
+    return str(_HERO_DIR / choice(HERO_START_LEVEL_DIALOGS))
 
 
 # Bullet settings
-bullet_speed = 10
-bullet_minigun_image = str(IMAGES_DIR / 'bullet_minigun.png')
-bullet_minigun_sound = str(WEAPONS_DIR / 'minigun.wav')
+BULLET_SPEED = 10
+BULLET_MINIGUN_IMAGE = str(_IMAGES_DIR / 'bullet_minigun.png')
+BULLET_MINIGUN_SOUND = str(_WEAPONS_DIR / 'minigun.wav')
 
 # Enemy settings
-enemy_speed = 3
-enemy_count = 10
-enemy_kamikaze_image = str(IMAGES_DIR / 'kamikaze.png')
-enemy_kamikaze_sound = str(ENEMIES_DIR / 'kamikaze.wav')
-enemy_sound_volume = 0.3
-enemy_spawn_start_x = 710
-enemy_spawn_end_y = screen_height - 45  # enemy rect height
+ENEMY_SPEED = 3
+ENEMY_COUNT = 10
+ENEMY_KAMIKAZE_IMAGE = str(_IMAGES_DIR / 'kamikaze.png')
+ENEMY_KAMIKAZE_SOUND = str(_ENEMIES_DIR / 'kamikaze.wav')
+ENEMY_SOUND_VOLUME = 0.3
+ENEMY_SPAWN_START_X = 710
+ENEMY_SPAWN_END_Y = WINDOW_HEIGHT - 45  # enemy rect height
 
 # Label settings
-text_color = colors.YELLOW1
-font_name = str(FONTS_DIR / 'boink.ttf')
-font_size = 25
-score_x = screen_width // 3
-score_y = 0
+LABEL_TEXT_COLOR = colors.YELLOW1
+LABEL_FONT_NAME = str(_FONTS_DIR / 'boink.ttf')
+LABEL_FONT_SIZE = 25
+LABEL_SCORE_X = WINDOW_WIDTH // 3
+LABEL_SCORE_Y = 0
 
 # Other
-black_color = colors.BLACK
-menu_control_label = '''Управление клавишами WASD, стрелять на ЛКМ.'''
+BLACK_COLOR = colors.BLACK

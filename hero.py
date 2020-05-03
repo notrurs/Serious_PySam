@@ -8,15 +8,15 @@ class Hero(GameObject):
     def __init__(self, x, y, picture, speed, sound, channel):
         GameObject.__init__(self, x, y, picture, speed, sound, channel)
         self.hero_idle = self.image_object
-        self.hero_fire = pygame.image.load(c.hero_fire_image).convert_alpha()
+        self.hero_fire = pygame.image.load(c.HERO_FIRE_IMAGE).convert_alpha()
         self.moving_left = False
         self.moving_right = False
         self.moving_up = False
         self.moving_down = False
         self.speed = speed
         self.state = 'idle'
-        self.permitted_x = c.screen_width - self.rect.w
-        self.permitted_y = c.screen_height - self.rect.h - c.hero_speed
+        self.permitted_x = c.WINDOW_WIDTH - self.rect.w
+        self.permitted_y = c.WINDOW_HEIGHT - self.rect.h - c.HERO_SPEED
 
     # handler for keyboard
     def handle(self, key):
@@ -38,11 +38,11 @@ class Hero(GameObject):
 
     def update(self):
         dx = dy = 0
-        if self.moving_left and self.rect.x > c.hero_speed:
+        if self.moving_left and self.rect.x > c.HERO_SPEED:
             dx = -self.speed
         if self.moving_right and self.rect.x < self.permitted_x:
             dx = self.speed
-        if self.moving_up and self.rect.y > c.hero_speed:
+        if self.moving_up and self.rect.y > c.HERO_SPEED:
             dy = -self.speed
         if self.moving_down and self.rect.y < self.permitted_y:
             dy = self.speed

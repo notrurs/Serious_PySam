@@ -23,11 +23,11 @@ class Game:
         pygame.mixer.init(44100, 16, 2, 4096)
         pygame.init()
         self.channel_hero_fire = pygame.mixer.Channel(0)
-        self.channel_hero_fire.set_volume(c.hero_fire_volume)
+        self.channel_hero_fire.set_volume(c.HERO_FIRE_VOLUME)
         self.channel_hero_dialog = pygame.mixer.Channel(1)
-        self.channel_hero_dialog.set_volume(c.hero_dialog_volume)
+        self.channel_hero_dialog.set_volume(c.HERO_DIALOG_VOLUME)
         self.channel_enemy_sound = pygame.mixer.Channel(2)
-        self.channel_enemy_sound.set_volume(c.enemy_sound_volume)
+        self.channel_enemy_sound.set_volume(c.ENEMY_SOUND_VOLUME)
         self.surface = pygame.display.set_mode((width, height))
         pygame.display.set_caption(caption)
         self.clock = pygame.time.Clock()
@@ -49,9 +49,9 @@ class Game:
 
     def channels_set_volume(self, volume='default'):
         if volume == 'default':
-            self.channel_hero_fire.set_volume(c.hero_fire_volume)
-            self.channel_hero_dialog.set_volume(c.hero_dialog_volume)
-            self.channel_enemy_sound.set_volume(c.enemy_sound_volume)
+            self.channel_hero_fire.set_volume(c.HERO_FIRE_VOLUME)
+            self.channel_hero_dialog.set_volume(c.HERO_DIALOG_VOLUME)
+            self.channel_enemy_sound.set_volume(c.ENEMY_SOUND_VOLUME)
         elif volume == 'mute':
             self.channel_hero_fire.set_volume(0)
             self.channel_hero_dialog.set_volume(0)
@@ -83,8 +83,8 @@ class Game:
                     handler(event.type, event.pos)
 
     def start_game(self):
-        pygame.mixer.music.load(c.music_fight)
-        pygame.mixer.music.set_volume(c.music_volume)
+        pygame.mixer.music.load(c.MUSIC_FIGHT)
+        pygame.mixer.music.set_volume(c.MUSIC_VOLUME)
         pygame.mixer.music.play(-1)
 
         hero_start_sound = pygame.mixer.Sound(c.hero_start_level_random_dialog())
@@ -101,12 +101,12 @@ class Game:
             self.clock.tick(self.frame_rate)
 
     def create_main_menu(self):
-        pygame.mixer.music.load(c.menu_music)
-        pygame.mixer.music.set_volume(c.menu_music_volume)
+        pygame.mixer.music.load(c.MENU_MUSIC)
+        pygame.mixer.music.set_volume(c.MENU_MUSIC_VOLUME)
         pygame.mixer.music.play(-1)
 
         menu_control = MainMenu()
-        menu_control.add_label(c.menu_control_label, align=ALIGN_CENTER, font_size=30,  margin=(0, 100))
+        menu_control.add_label(c.MENU_CONTROL_LABEL, align=ALIGN_CENTER, font_size=30,  margin=(0, 100))
         menu_control.add_button('Назад', menu_control.event_back)
 
         menu = MainMenu()
@@ -117,7 +117,7 @@ class Game:
         menu.mainloop(self.surface)
 
     def background_function(self):
-        bg_img = pygame.image.load(c.menu_background_image)
+        bg_img = pygame.image.load(c.MENU_BACKGROUND_IMAGE)
         self.surface.blit(bg_img, (0, 0))
 
     def run(self):
