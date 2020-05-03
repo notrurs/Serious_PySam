@@ -50,7 +50,9 @@ HERO_DIALOG_VOLUME = 1
 HERO_START_LEVEL_DIALOGS = ['i_am_ready_for_some_serious_carnage.wav',
                             'sam_i_am.wav',
                             'say_hello_to_papa.wav',
-                            'seriously_is_that_the_best_you_can_do.wav']
+                            'seriously_is_that_the_best_you_can_do.wav',
+                            'cmon_you_ugly_freaks.wav',
+                            'come_on_play_with_me_now.wav']
 
 
 def hero_start_level_random_dialog():
