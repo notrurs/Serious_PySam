@@ -45,5 +45,5 @@ class MenuSound(Sound):
     def __init__(self):
         Sound.__init__(self)
         self._channel = Channel(3)
-        self.set_sound(SOUND_TYPE_CLICK_MOUSE, c.MENU_SOUND_CLICK, volume=1)
-        self.set_sound(SOUND_TYPE_WIDGET_SELECTION, c.MENU_SOUND_SELECT, volume=1)
+        self.set_sound(SOUND_TYPE_CLICK_MOUSE, c.MENU_SOUND_CLICK, volume=1.0)
+        self.set_sound(SOUND_TYPE_WIDGET_SELECTION, c.MENU_SOUND_SELECT, volume=1.0)
