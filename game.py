@@ -17,9 +17,12 @@ class Game:
         self.background_image = pygame.image.load(back_image_filename)
         self.frame_rate = frame_rate
         self.game_over = False
+        self.is_boss_spawn = False
         self.objects = []
         self.enemies = []
         self.bullets = []
+        self.hud_objects = []
+        self.hero_objects = []
         pygame.mixer.init(44100, 16, 2, 4096)
         pygame.init()
         self.channel_hero_fire = pygame.mixer.Channel(0)
@@ -36,9 +39,12 @@ class Game:
         self.mouse_handlers = defaultdict(list)
 
     def reinitializied_game(self):
+        self.is_boss_spawn = False
         self.objects = []
         self.enemies = []
         self.bullets = []
+        self.hud_objects = []
+        self.hero_objects = []
         self.channel_hero_fire = pygame.mixer.Channel(0)
         self.channel_hero_dialog = pygame.mixer.Channel(1)
         self.channel_enemy_sound = pygame.mixer.Channel(2)
@@ -92,6 +98,7 @@ class Game:
 
         while not self.game_over:
             self.surface.blit(self.background_image, (0, 0))
+            self.objects = [*self.enemies, *self.bullets, *self.hero_objects, *self.hud_objects]
 
             self.handle_events()
             self.update()
