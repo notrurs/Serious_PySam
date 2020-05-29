@@ -46,7 +46,7 @@ HERO_SPEED = 5
 HERO_FIRE_IMAGE = str(_IMAGES_DIR / 'hero_fire.png')
 HERO_IDLE_IMAGE = str(_IMAGES_DIR / 'hero_idle.png')
 HERO_FIRE_VOLUME = 0.4
-HERO_DIALOG_VOLUME = 1
+HERO_DIALOG_VOLUME = 1.0
 HERO_START_LEVEL_DIALOGS = ['i_am_ready_for_some_serious_carnage.wav',
                             'sam_i_am.wav',
                             'say_hello_to_papa.wav',
@@ -65,13 +65,25 @@ BULLET_MINIGUN_IMAGE = str(_IMAGES_DIR / 'bullet_minigun.png')
 BULLET_MINIGUN_SOUND = str(_WEAPONS_DIR / 'minigun.wav')
 
 # Enemy settings
-ENEMY_SPEED = 3
+ENEMY_SPEED = 1
 ENEMY_COUNT = 10
 ENEMY_KAMIKAZE_IMAGE = str(_IMAGES_DIR / 'kamikaze.png')
 ENEMY_KAMIKAZE_SOUND = str(_ENEMIES_DIR / 'kamikaze.wav')
 ENEMY_SOUND_VOLUME = 0.3
 ENEMY_SPAWN_START_X = 710
 ENEMY_SPAWN_END_Y = WINDOW_HEIGHT - 45  # enemy rect height
+
+# Boss settings
+BOSS_MUSIC = str(_MUSIC_DIR / 'LastFight.ogg')
+BOSS_SPAWN_X = WINDOW_WIDTH - 100
+BOSS_SPAWN_Y = WINDOW_HEIGHT // 2
+BOSS_ATTACK_SPEED = 20
+BOSS_IDLE_SPEED = 0
+BOSS_ATTACK_PERIOD = 5
+BOSS_END_X_ATTACK = 50
+BOSS_IMAGE = str(_IMAGES_DIR / 'kamikaze.png')
+BOSS_SOUND = str(_ENEMIES_DIR / 'kamikaze.wav')
+BOSS_VOLUME = 0.3
 
 # Label settings
 LABEL_TEXT_COLOR = colors.YELLOW1
