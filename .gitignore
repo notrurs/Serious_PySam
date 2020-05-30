@@ -1,0 +1,6 @@
+# IDE's dirs
+.idea/
+__pycache__/
+
+# Venv
+venv/
