@@ -21,6 +21,7 @@ class Game:
         self.objects = []
         self.enemies = []
         self.bullets = []
+        self.enemy_bullets = []
         self.hud_objects = []
         self.hero_objects = []
         pygame.mixer.init(44100, 16, 2, 4096)
@@ -43,6 +44,7 @@ class Game:
         self.objects = []
         self.enemies = []
         self.bullets = []
+        self.enemy_bullets = []
         self.hud_objects = []
         self.hero_objects = []
         self.channel_hero_fire = pygame.mixer.Channel(0)
@@ -98,7 +100,7 @@ class Game:
 
         while not self.game_over:
             self.surface.blit(self.background_image, (0, 0))
-            self.objects = [*self.enemies, *self.bullets, *self.hero_objects, *self.hud_objects]
+            self.objects = [*self.enemies, *self.bullets, *self.enemy_bullets, *self.hero_objects, *self.hud_objects]
 
             self.handle_events()
             self.update()
