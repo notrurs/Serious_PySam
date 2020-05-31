@@ -5,6 +5,7 @@ A simple game in Serious Sam universe.
 
 ## Getting Started
 
+### Installing
 The game is alpha state, but if you want to play, you need to do these steps below.
 
 Step 1. Clone this repo
@@ -18,6 +19,9 @@ Step 3. Start the game:
 ```
 python serious_pysam.py
 ```
+
+### Game settings
+You can change game settings (e.g. enemy count, bullet speed) - see the [conf.py](config.py) file.
 
 ## License
 
