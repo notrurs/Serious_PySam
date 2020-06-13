@@ -8,6 +8,7 @@ from kamikaze import Kamikaze
 from bullet import Bullet
 from text_object import TextObject
 from menu import MainMenu
+from ugh_zan import UghZan
 
 
 class SeriousPySam(Game):
@@ -15,6 +16,7 @@ class SeriousPySam(Game):
         Game.__init__(self, c.WINDOW_CAPTION, c.WINDOW_WIDTH, c.WINDOW_HEIGHT, c.GAME_BACKGROUND_IMAGE, c.FRAME_RATE)
         self.score = 0
         self.hero = None
+        self.boss = None
         self.pause_menu = None
         self.hero_handle_keys = [pygame.K_w, pygame.K_s, pygame.K_a, pygame.K_d]
         self.create_objects()
@@ -43,7 +45,7 @@ class SeriousPySam(Game):
         self.mouse_handlers[pygame.MOUSEBUTTONUP].append(hero.handle_mouse)
 
         self.hero = hero
-        self.objects.append(self.hero)
+        self.hero_objects.append(self.hero)
 
     def create_enemy(self, count=1):
         enemies = [Kamikaze(randint(c.ENEMY_SPAWN_START_X, c.WINDOW_WIDTH),
@@ -53,7 +55,6 @@ class SeriousPySam(Game):
                             c.ENEMY_KAMIKAZE_SOUND,
                             self.channel_enemy_sound) for enemy in range(count)]
         for enemy in enemies:
-            self.objects.append(enemy)
             self.enemies.append(enemy)
 
     def create_labels(self):
@@ -63,7 +64,7 @@ class SeriousPySam(Game):
                                  c.LABEL_TEXT_COLOR,
                                  c.LABEL_FONT_NAME,
                                  c.LABEL_FONT_SIZE)
-        self.objects.append(score_label)
+        self.hud_objects.append(score_label)
 
     def resume_game(self):
         self.pause_menu.toggle()
@@ -116,6 +117,8 @@ class SeriousPySam(Game):
             self.enemies.remove(obj)
         if obj in self.bullets:
             self.bullets.remove(obj)
+        if obj in self.enemy_bullets:
+            self.enemy_bullets.remove(obj)
 
     def handle_bullets_collisions(self):
         for bullet in self.bullets:
@@ -126,9 +129,57 @@ class SeriousPySam(Game):
                     self.kill_object(enemy)
                     self.create_enemy()
 
+    def handle_boss_spawn(self):
+        if not self.is_boss_spawn and self.score >= 500:
+            self.is_boss_spawn = True
+            self.enemies = []
+            self.boss = UghZan(c.BOSS_SPAWN_X,
+                               c.BOSS_SPAWN_Y,
+                               c.BOSS_IMAGE,
+                               c.BOSS_IDLE_SPEED,
+                               c.hero_start_level_random_dialog(),
+                               self.channel_enemy_sound)
+            self.enemies.append(self.boss)
+            pygame.mixer.music.load(c.BOSS_MUSIC)
+            pygame.mixer.music.play(-1)
+
+    def handle_boss_attacks(self):
+        if self.is_boss_spawn:
+            if self.boss.attack_state == 'idle' and self.boss.get_time() % 6 == self.boss.attack_period:
+                self.boss.attack((self.hero.x, self.hero.y))
+
+            # TODO: make boss's return less crutch by adding it to this if
+            if self.boss.attack_state == 'attack1' and self.boss.x <= c.BOSS_END_X_ATTACK:
+                self.boss.change_attack_state()
+                self.boss.set_speed(c.BOSS_ATTACK_SPEED)
+            elif self.boss.attack_state == 'idle' and self.boss.x >= c.BOSS_SPAWN_X:
+                self.boss.set_speed()
+
+            elif self.boss.attack_state == 'attack2' and self.boss.is_boss_fire:
+                if self.boss.is_boss_can_move():
+                    hero_pos = (self.hero.x, self.hero.y)
+                    boss_pos = (self.boss.x, self.boss.y)
+                    bullet = Bullet(self.boss.x,
+                                    self.boss.y,
+                                    c.BULLET_MINIGUN_IMAGE,
+                                    -c.BOSS_BULLET_SPEED,
+                                    c.BULLET_MINIGUN_SOUND,
+                                    (hero_pos, boss_pos))
+                    self.enemy_bullets.append(bullet)
+                    self.boss.attack2_current_steps += 1
+                    if self.boss.attack2_current_steps >= self.boss.attack2_steps:
+                        self.boss.stop_attack()
+                else:
+                    self.boss.stop_attack()
+
+            elif self.boss.attack_state == 'attack3' and self.boss.is_boss_fire:
+                pass
+
     def update(self):
         self.handle_bullets()
         self.handle_bullets_collisions()
+        self.handle_boss_spawn()
+        self.handle_boss_attacks()
         self.garbage_collector()
         super().update()
 
