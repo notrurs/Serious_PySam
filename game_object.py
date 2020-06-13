@@ -20,6 +20,30 @@ class GameObject:
     def y(self):
         return self.rect.y
 
+    @property
+    def top(self):
+        return self.rect.top
+
+    @property
+    def bottom(self):
+        return self.rect.bottom
+
+    @property
+    def width(self):
+        return self.rect.w
+
+    @property
+    def height(self):
+        return self.rect.h
+
+    @property
+    def left(self):
+        return self.rect.left
+
+    @property
+    def right(self):
+        return self.rect.right
+
     def blit(self, surface):
         surface.blit(self.image_object, (self.rect.x, self.rect.y))
 
