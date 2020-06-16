@@ -146,7 +146,7 @@ class SeriousPySam(Game):
     def handle_boss_attacks(self):
         if self.is_boss_spawn:
             if self.boss.attack_state == 'idle' and self.boss.get_time() % 6 == self.boss.attack_period:
-                self.boss.attack((self.hero.x, self.hero.y))
+                self.boss.attack([*self.hero.center])
 
             # TODO: make boss's return less crutch by adding it to this if
             if self.boss.attack_state == 'attack1' and self.boss.x <= c.BOSS_END_X_ATTACK:
@@ -157,14 +157,12 @@ class SeriousPySam(Game):
 
             elif self.boss.attack_state == 'attack2' and self.boss.is_boss_fire:
                 if self.boss.is_boss_can_move():
-                    hero_pos = (self.hero.x, self.hero.y)
-                    boss_pos = (self.boss.x, self.boss.y)
-                    bullet = Bullet(self.boss.x,
-                                    self.boss.y,
+                    # These nums is offsets from boss positions for each bullet pos
+                    bullet = Bullet(self.boss.x + 8,
+                                    self.boss.y + 88,
                                     c.BULLET_MINIGUN_IMAGE,
                                     -c.BOSS_BULLET_SPEED,
-                                    c.BULLET_MINIGUN_SOUND,
-                                    (hero_pos, boss_pos))
+                                    c.BULLET_MINIGUN_SOUND)
                     self.enemy_bullets.append(bullet)
                     self.boss.attack2_current_steps += 1
                     if self.boss.attack2_current_steps >= self.boss.attack2_steps:
@@ -173,7 +171,26 @@ class SeriousPySam(Game):
                     self.boss.stop_attack()
 
             elif self.boss.attack_state == 'attack3' and self.boss.is_boss_fire:
-                pass
+                hero_pos = self.hero.center
+
+                # These nums is offsets from boss positions for each bullet pos
+                boss_bullets_pos = ([self.boss.x + 8, self.boss.y + 88],
+                                    [self.boss.x + 165, self.boss.y + 77],
+                                    [self.boss.x + 32, self.boss.y + 165],
+                                    [self.boss.x + 118, self.boss.y + 139])
+
+                # Boss has 4 weapons, so he need 4 bullets
+                for bullet_num in range(4):
+                    bullet_pos = boss_bullets_pos[bullet_num]
+                    bullet = Bullet(bullet_pos[0],
+                                    bullet_pos[1],
+                                    c.BULLET_MINIGUN_IMAGE,
+                                    -c.BOSS_BULLET_SPEED,
+                                    c.BULLET_MINIGUN_SOUND,
+                                    (hero_pos, bullet_pos))
+                    self.enemy_bullets.append(bullet)
+
+                self.boss.stop_attack()
 
     def update(self):
         self.handle_bullets()
