@@ -40,7 +40,7 @@ class UghZan(GameObject):
             self.set_speed(0, self.attack2_speed)
         elif self.bottom >= self.permitted_y[1]:
             self.set_speed(0, -self.attack2_speed)
-        elif hero_position[1] > self.y:
+        elif hero_position[1] > self.center[1]:
             self.set_speed(0, self.attack2_speed)
         else:
             self.set_speed(0, -self.attack2_speed)
@@ -52,12 +52,9 @@ class UghZan(GameObject):
 
     def attack(self, hero_position):
         if self.attack_state == 'idle':
-            # list_attacks = [self.attack1, self.attack2, self.attack3]
-            list_attacks = [self.attack2]
+            list_attacks = [self.attack1, self.attack2, self.attack3]
             attack = choice(list_attacks)
             self.change_attack_state(attack.__name__)
-            print(attack.__name__)
-            print('*' * 20)
             attack(hero_position)
             self.time = monotonic()
 
