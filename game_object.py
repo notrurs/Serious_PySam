@@ -44,6 +44,10 @@ class GameObject:
     def right(self):
         return self.rect.right
 
+    @property
+    def center(self):
+        return self.rect.center
+
     def blit(self, surface):
         surface.blit(self.image_object, (self.rect.x, self.rect.y))
 
