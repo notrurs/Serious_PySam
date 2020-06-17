@@ -179,7 +179,7 @@ class SeriousPySam(Game):
                                     [self.boss.x + 32, self.boss.y + 165],
                                     [self.boss.x + 118, self.boss.y + 139])
 
-                boss_bullets_images = c.BOSS_ATTACK3_BULLET_IMAGES
+                boss_bullets_images = c.BOSS_BULLET_IMAGES
 
                 # Boss has 4 weapons, so he need 4 bullets
                 for bullet_num in range(4):
