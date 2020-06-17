@@ -158,7 +158,7 @@ class SeriousPySam(Game):
             elif self.boss.attack_state == 'attack2' and self.boss.is_boss_fire:
                 if self.boss.is_boss_can_move():
                     bullet_num = randint(0, 3)
-                    rand_bullet = self.boss.boss_bullets_pos[bullet_num]
+                    rand_bullet = self.boss.get_bullets_pos()[bullet_num]
                     bullet = Bullet(rand_bullet[0],
                                     rand_bullet[1],
                                     self.boss.boss_bullets_images[bullet_num],
@@ -176,7 +176,7 @@ class SeriousPySam(Game):
 
                 # Boss has 4 weapons, so he need 4 bullets
                 for bullet_num in range(4):
-                    bullet_pos = self.boss.boss_bullets_pos[bullet_num]
+                    bullet_pos = self.boss.get_bullets_pos()[bullet_num]
                     bullet = Bullet(bullet_pos[0],
                                     bullet_pos[1],
                                     self.boss.boss_bullets_images[bullet_num],

@@ -58,6 +58,14 @@ class UghZan(GameObject):
     def attack3(self, hero_position):
         self.change_fire_state(True)
 
+    def get_bullets_pos(self):
+        # These nums is offsets from boss positions for each bullet pos
+        self.boss_bullets_pos = ([self.x + 8, self.y + 88],
+                                 [self.x + 165, self.y + 77],
+                                 [self.x + 32, self.y + 165],
+                                 [self.x + 118, self.y + 139])
+        return self.boss_bullets_pos
+
     def attack(self, hero_position):
         if self.attack_state == 'idle':
             list_attacks = [self.attack1, self.attack2, self.attack3]
