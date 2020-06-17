@@ -3,7 +3,6 @@ from random import choice
 
 import colors
 
-
 # Paths settings
 _BASE_DIR = Path.cwd()
 _FONTS_DIR = _BASE_DIR / 'fonts'
@@ -89,6 +88,10 @@ BOSS_ATTACK2_SPEED = 10
 BOSS_ATTACK2_STEPS = 15
 BOSS_PERMITTED_POSITION_X = (20, WINDOW_WIDTH - 20)
 BOSS_PERMITTED_POSITION_Y = (20, WINDOW_HEIGHT - 20)
+BOSS_BULLET_IMAGES = [str(_IMAGES_DIR / 'bullet_electrogun.png'),
+                      str(_IMAGES_DIR / 'bullet_rocket.png'),
+                      str(_IMAGES_DIR / 'bullet_laser.png'),
+                      str(_IMAGES_DIR / 'bullet_lavaball.png')]
 
 # Label settings
 LABEL_TEXT_COLOR = colors.YELLOW1
