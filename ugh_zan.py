@@ -9,6 +9,7 @@ from config import BOSS_ATTACK_PERIOD
 from config import BOSS_BULLET_SPEED
 from config import BOSS_ATTACK2_SPEED
 from config import BOSS_ATTACK2_STEPS
+from config import BOSS_BULLET_IMAGES
 
 
 class UghZan(GameObject):
@@ -26,6 +27,13 @@ class UghZan(GameObject):
         self.attack2_speed = BOSS_ATTACK2_SPEED
         self.attack2_steps = BOSS_ATTACK2_STEPS
         self.attack2_current_steps = 0
+
+        # These nums is offsets from boss positions for each bullet pos
+        self.boss_bullets_pos = ([self.x + 8, self.y + 88],
+                                 [self.x + 165, self.y + 77],
+                                 [self.x + 32, self.y + 165],
+                                 [self.x + 118, self.y + 139])
+        self.boss_bullets_images = BOSS_BULLET_IMAGES
 
     def get_time(self):
         return int(monotonic() - self.time)
