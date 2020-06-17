@@ -157,10 +157,11 @@ class SeriousPySam(Game):
 
             elif self.boss.attack_state == 'attack2' and self.boss.is_boss_fire:
                 if self.boss.is_boss_can_move():
-                    # These nums is offsets from boss positions for each bullet pos
-                    bullet = Bullet(self.boss.x + 8,
-                                    self.boss.y + 88,
-                                    c.BULLET_MINIGUN_IMAGE,
+                    bullet_num = randint(0, 3)
+                    rand_bullet = self.boss.boss_bullets_pos[bullet_num]
+                    bullet = Bullet(rand_bullet[0],
+                                    rand_bullet[1],
+                                    self.boss.boss_bullets_images[bullet_num],
                                     -c.BOSS_BULLET_SPEED,
                                     c.BULLET_MINIGUN_SOUND)
                     self.enemy_bullets.append(bullet)
@@ -173,20 +174,12 @@ class SeriousPySam(Game):
             elif self.boss.attack_state == 'attack3' and self.boss.is_boss_fire:
                 hero_pos = self.hero.center
 
-                # These nums is offsets from boss positions for each bullet pos
-                boss_bullets_pos = ([self.boss.x + 8, self.boss.y + 88],
-                                    [self.boss.x + 165, self.boss.y + 77],
-                                    [self.boss.x + 32, self.boss.y + 165],
-                                    [self.boss.x + 118, self.boss.y + 139])
-
-                boss_bullets_images = c.BOSS_BULLET_IMAGES
-
                 # Boss has 4 weapons, so he need 4 bullets
                 for bullet_num in range(4):
-                    bullet_pos = boss_bullets_pos[bullet_num]
+                    bullet_pos = self.boss.boss_bullets_pos[bullet_num]
                     bullet = Bullet(bullet_pos[0],
                                     bullet_pos[1],
-                                    boss_bullets_images[bullet_num],
+                                    self.boss.boss_bullets_images[bullet_num],
                                     -c.BOSS_BULLET_SPEED,
                                     c.BULLET_MINIGUN_SOUND,
                                     (hero_pos, bullet_pos))
