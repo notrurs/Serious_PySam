@@ -1,14 +1,14 @@
 import pygame
 from random import randint
 
-import config as c
-from game import Game
-from hero import Hero
-from kamikaze import Kamikaze
-from bullet import Bullet
-from text_object import TextObject
-from menu import MainMenu
-from ugh_zan import UghZan
+from serious_pysam import config as c
+from serious_pysam.game.game import Game
+from serious_pysam.menu.menu import MainMenu
+from serious_pysam.text_object.text_object import TextObject
+from serious_pysam.game_object.entity.bullet import Bullet
+from serious_pysam.game_object.entity.hero import Hero
+from serious_pysam.game_object.entity.kamikaze import Kamikaze
+from serious_pysam.game_object.entity.ugh_zan import UghZan
 
 
 class SeriousPySam(Game):
