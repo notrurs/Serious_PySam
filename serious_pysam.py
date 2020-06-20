@@ -148,12 +148,11 @@ class SeriousPySam(Game):
             if self.boss.attack_state == 'idle' and self.boss.get_time() % 6 == self.boss.attack_period:
                 self.boss.attack([*self.hero.center])
 
-            # TODO: make boss's return less crutch by adding it to this if
-            if self.boss.attack_state == 'attack1' and self.boss.x <= c.BOSS_END_X_ATTACK:
-                self.boss.change_attack_state()
-                self.boss.set_speed(c.BOSS_ATTACK_SPEED)
-            elif self.boss.attack_state == 'idle' and self.boss.x >= c.BOSS_SPAWN_X:
-                self.boss.set_speed()
+            if self.boss.attack_state == 'attack1':
+                if not self.boss.is_boss_can_move() and self.boss.speed[0] < 0:
+                    self.boss.set_speed(self.boss.attack1_speed)
+                elif not self.boss.is_boss_can_move() and self.boss.speed[0] > 0:
+                    self.boss.stop_attack()
 
             elif self.boss.attack_state == 'attack2' and self.boss.is_boss_fire:
                 if self.boss.is_boss_can_move():
