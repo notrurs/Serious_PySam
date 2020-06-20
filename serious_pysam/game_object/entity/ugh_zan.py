@@ -1,16 +1,16 @@
 from time import monotonic
 from random import choice
 
-from game_object import GameObject
-from config import BOSS_PERMITTED_POSITION_X
-from config import BOSS_PERMITTED_POSITION_Y
-from config import BOSS_ATTACK1_SPEED
-from config import BOSS_ATTACK1_PERMITTED_X
-from config import BOSS_ATTACK_PERIOD
-from config import BOSS_BULLET_SPEED
-from config import BOSS_ATTACK2_SPEED
-from config import BOSS_ATTACK2_STEPS
-from config import BOSS_BULLET_IMAGES
+from serious_pysam.game_object.game_object import GameObject
+from serious_pysam.config import BOSS_PERMITTED_POSITION_X
+from serious_pysam.config import BOSS_PERMITTED_POSITION_Y
+from serious_pysam.config import BOSS_ATTACK1_SPEED
+from serious_pysam.config import BOSS_ATTACK1_PERMITTED_X
+from serious_pysam.config import BOSS_ATTACK_PERIOD
+from serious_pysam.config import BOSS_BULLET_SPEED
+from serious_pysam.config import BOSS_ATTACK2_SPEED
+from serious_pysam.config import BOSS_ATTACK2_STEPS
+from serious_pysam.config import BOSS_BULLET_IMAGES
 
 
 class UghZan(GameObject):

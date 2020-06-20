@@ -10,7 +10,7 @@ from pygame_menu.sound import SOUND_TYPE_CLICK_MOUSE
 from pygame_menu.sound import SOUND_TYPE_WIDGET_SELECTION
 from pygame_menu import events
 
-import config as c
+import serious_pysam.config as c
 
 
 class MainMenu(Menu):

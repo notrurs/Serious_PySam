@@ -1,4 +1,4 @@
-from game_object import GameObject
+from serious_pysam.game_object.game_object import GameObject
 
 
 class Kamikaze(GameObject):
