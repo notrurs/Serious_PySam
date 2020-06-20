@@ -1,13 +1,14 @@
 from pathlib import Path
 from random import choice
 
-import colors
+from serious_pysam import colors
 
 # Paths settings
 _BASE_DIR = Path.cwd()
-_FONTS_DIR = _BASE_DIR / 'fonts'
-_IMAGES_DIR = _BASE_DIR / 'images'
-_SOUND_EFFECTS_DIR = _BASE_DIR / 'sound_effects'
+_RESOURCES_DIR = _BASE_DIR / 'resources'
+_FONTS_DIR = _RESOURCES_DIR / 'fonts'
+_IMAGES_DIR = _RESOURCES_DIR / 'images'
+_SOUND_EFFECTS_DIR = _RESOURCES_DIR / 'sound_effects'
 _ENEMIES_DIR = _SOUND_EFFECTS_DIR / 'enemies'
 _HERO_DIR = _SOUND_EFFECTS_DIR / 'hero'
 _MUSIC_DIR = _SOUND_EFFECTS_DIR / 'music'
