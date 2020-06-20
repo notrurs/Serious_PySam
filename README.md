@@ -15,7 +15,12 @@ Step 2. Install requirements:
 pip install -r requirements.txt
 ```
 
-Step 3. Start the game:
+Step 3. Move to `serious_pysam` dir:
+```
+cd serious_pysam
+```
+
+Step 4. Start the game:
 ```
 python run.py
 ```
