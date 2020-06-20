@@ -17,7 +17,7 @@ pip install -r requirements.txt
 
 Step 3. Start the game:
 ```
-python serious_pysam.py
+python run.py
 ```
 
 ### Game settings
