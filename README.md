@@ -21,7 +21,7 @@ python run.py
 ```
 
 ### Game settings
-You can change game settings (e.g. enemy count, bullet speed) - see the [conf.py](config.py) file.
+You can change game settings (e.g. enemy count, bullet speed) - see the [config.py](serious_pysam/config.py) file.
 
 ## License
 
