@@ -3,8 +3,8 @@ import sys
 from collections import defaultdict
 from pygame_menu.locals import ALIGN_CENTER
 
-import config as c
-from menu import MainMenu
+from serious_pysam import config as c
+from serious_pysam.menu.menu import MainMenu
 
 
 class Game:

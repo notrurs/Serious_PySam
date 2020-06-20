@@ -1,7 +1,7 @@
 import pygame
 
-import config as c
-from game_object import GameObject
+import serious_pysam.config as c
+from serious_pysam.game_object.game_object import GameObject
 
 
 class Hero(GameObject):
