@@ -4,7 +4,8 @@ from random import choice
 from game_object import GameObject
 from config import BOSS_PERMITTED_POSITION_X
 from config import BOSS_PERMITTED_POSITION_Y
-from config import BOSS_ATTACK_SPEED
+from config import BOSS_ATTACK1_SPEED
+from config import BOSS_ATTACK1_PERMITTED_X
 from config import BOSS_ATTACK_PERIOD
 from config import BOSS_BULLET_SPEED
 from config import BOSS_ATTACK2_SPEED
@@ -23,7 +24,8 @@ class UghZan(GameObject):
         self.permitted_x = BOSS_PERMITTED_POSITION_X
         self.permitted_y = BOSS_PERMITTED_POSITION_Y
         self.bullet_speed = BOSS_BULLET_SPEED
-        self.attack1_speed = BOSS_ATTACK_SPEED
+        self.attack1_speed = BOSS_ATTACK1_SPEED
+        self.attack1_permitted_x = BOSS_ATTACK1_PERMITTED_X
         self.attack2_speed = BOSS_ATTACK2_SPEED
         self.attack2_steps = BOSS_ATTACK2_STEPS
         self.attack2_current_steps = 0
@@ -77,6 +79,7 @@ class UghZan(GameObject):
     def stop_attack(self):
         self.change_attack_state()
         self.change_fire_state()
+        self.set_speed()
         self.attack2_current_steps = 0
 
     def set_speed(self, offset_x=0, offset_y=0):
