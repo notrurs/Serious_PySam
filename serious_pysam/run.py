@@ -134,7 +134,7 @@ class SeriousPySam(Game):
     def handle_enemy_collision(self):
         for enemy in self.enemies:
             if enemy.rect.colliderect(self.hero.rect):
-                self.hero.health -= enemy.damage
+                self.hero.get_damage(enemy.damage)
                 if isinstance(enemy, Kamikaze):
                     self.kill_object(enemy)
 
