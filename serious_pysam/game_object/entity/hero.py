@@ -9,6 +9,7 @@ class Hero(GameObject):
         GameObject.__init__(self, x, y, picture, speed, sound, channel)
         self.hero_idle = self.image_object
         self.hero_fire = pygame.image.load(c.HERO_FIRE_IMAGE).convert_alpha()
+        self.health = c.HERO_HP
         self.moving_left = False
         self.moving_right = False
         self.moving_up = False
