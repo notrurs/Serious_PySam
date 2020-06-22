@@ -131,6 +131,12 @@ class SeriousPySam(Game):
                         self.kill_object(enemy)
                         self.create_enemy()
 
+    def handle_enemy_collision(self):
+        for enemy in self.enemies:
+            if enemy.rect.colliderect(self.hero.rect):
+                self.hero.health -= enemy.damage
+                self.kill_object(enemy)
+
     def handle_boss_spawn(self):
         if not self.is_boss_spawn and self.score >= 500:
             self.is_boss_spawn = True
@@ -200,6 +206,7 @@ class SeriousPySam(Game):
         self.handle_bullets_collisions()
         self.handle_boss_spawn()
         self.handle_boss_attacks()
+        self.handle_enemy_collision()
         self.garbage_collector()
         super().update()
 
