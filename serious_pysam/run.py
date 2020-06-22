@@ -98,7 +98,8 @@ class SeriousPySam(Game):
                             spawn_bullet_y,
                             c.BULLET_MINIGUN_IMAGE,
                             c.BULLET_SPEED,
-                            c.BULLET_MINIGUN_SOUND)
+                            c.BULLET_MINIGUN_SOUND,
+                            c.HERO_DAMAGE)
             self.objects.append(bullet)
             self.bullets.append(bullet)
             self.channel_hero_fire.play(bullet.sound)
@@ -124,10 +125,12 @@ class SeriousPySam(Game):
         for bullet in self.bullets:
             for enemy in self.enemies:
                 if bullet.rect.colliderect(enemy.rect):
-                    self.score += 100
+                    enemy.health -= bullet.damage
                     self.kill_object(bullet)
-                    self.kill_object(enemy)
-                    self.create_enemy()
+                    if enemy.health <= 0:
+                        self.score += 100
+                        self.kill_object(enemy)
+                        self.create_enemy()
 
     def handle_boss_spawn(self):
         if not self.is_boss_spawn and self.score >= 500:
@@ -162,7 +165,8 @@ class SeriousPySam(Game):
                                     rand_bullet[1],
                                     self.boss.boss_bullets_images[bullet_num],
                                     -c.BOSS_BULLET_SPEED,
-                                    c.BULLET_MINIGUN_SOUND)
+                                    c.BULLET_MINIGUN_SOUND,
+                                    c.HERO_DAMAGE)
                     self.enemy_bullets.append(bullet)
                     self.boss.attack2_current_steps += 1
                     if self.boss.attack2_current_steps >= self.boss.attack2_steps:
@@ -181,6 +185,7 @@ class SeriousPySam(Game):
                                     self.boss.boss_bullets_images[bullet_num],
                                     -c.BOSS_BULLET_SPEED,
                                     c.BULLET_MINIGUN_SOUND,
+                                    c.HERO_DAMAGE,
                                     (hero_pos, bullet_pos))
                     self.enemy_bullets.append(bullet)
 
