@@ -43,6 +43,7 @@ MENU_CONTROL_LABEL = '''Управление клавишами WASD, стрел
 
 # Hero settings
 HERO_HP = 100
+HERO_IMMORTALITY_TIME = 1  # After get damage, in seconds
 HERO_SPEED = 5
 HERO_FIRE_IMAGE = str(_IMAGES_DIR / 'hero_fire.png')
 HERO_IDLE_IMAGE = str(_IMAGES_DIR / 'hero_idle.png')
