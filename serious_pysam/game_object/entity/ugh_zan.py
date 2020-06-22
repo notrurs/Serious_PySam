@@ -13,6 +13,7 @@ from serious_pysam.config import BOSS_ATTACK2_STEPS
 from serious_pysam.config import BOSS_BULLET_IMAGES
 from serious_pysam.config import BOSS_HP
 from serious_pysam.config import BOSS_DAMAGE
+from serious_pysam.config import BOSS_BULLETS_DAMAGES
 
 
 class UghZan(GameObject):
@@ -22,6 +23,7 @@ class UghZan(GameObject):
         self.time = monotonic()
         self.health = BOSS_HP
         self.damage = BOSS_DAMAGE
+        self.bullets_damages = BOSS_BULLETS_DAMAGES
         self.attack_period = BOSS_ATTACK_PERIOD
         self.attack_state = 'idle'
         self.is_boss_fire = False

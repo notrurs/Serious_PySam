@@ -120,7 +120,7 @@ class SeriousPySam(Game):
         if obj in self.enemy_bullets:
             self.enemy_bullets.remove(obj)
 
-    def handle_bullets_collisions(self):
+    def handle_hero_bullets_collisions(self):
         for bullet in self.bullets:
             for enemy in self.enemies:
                 if bullet.rect.colliderect(enemy.rect):
@@ -130,6 +130,12 @@ class SeriousPySam(Game):
                         self.score += 100
                         self.kill_object(enemy)
                         self.create_enemy()
+
+    def handle_enemy_bullets_collisions(self):
+        for bullet in self.enemy_bullets:
+            if bullet.rect.colliderect(self.hero.rect):
+                self.hero.get_damage(bullet.damage)
+                self.kill_object(bullet)
 
     def handle_enemy_collision(self):
         for enemy in self.enemies:
@@ -177,7 +183,7 @@ class SeriousPySam(Game):
                                     self.boss.boss_bullets_images[bullet_num],
                                     -c.BOSS_BULLET_SPEED,
                                     c.BULLET_MINIGUN_SOUND,
-                                    c.HERO_DAMAGE)
+                                    self.boss.bullets_damages[bullet_num])
                     self.enemy_bullets.append(bullet)
                     self.boss.attack2_current_steps += 1
                     if self.boss.attack2_current_steps >= self.boss.attack2_steps:
@@ -196,7 +202,7 @@ class SeriousPySam(Game):
                                     self.boss.boss_bullets_images[bullet_num],
                                     -c.BOSS_BULLET_SPEED,
                                     c.BULLET_MINIGUN_SOUND,
-                                    c.HERO_DAMAGE,
+                                    self.boss.bullets_damages[bullet_num],
                                     (hero_pos, bullet_pos))
                     self.enemy_bullets.append(bullet)
 
@@ -204,7 +210,8 @@ class SeriousPySam(Game):
 
     def update(self):
         self.handle_bullets()
-        self.handle_bullets_collisions()
+        self.handle_hero_bullets_collisions()
+        self.handle_enemy_bullets_collisions()
         self.handle_boss_spawn()
         self.handle_boss_attacks()
         self.handle_enemy_collision()
