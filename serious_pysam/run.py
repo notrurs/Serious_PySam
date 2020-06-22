@@ -24,7 +24,7 @@ class SeriousPySam(Game):
     def create_objects(self):
         self.create_hero()
         self.create_enemy(c.ENEMY_COUNT)
-        self.create_labels()
+        self.create_start_labels()
 
     def create_hero(self):
         hero = Hero(c.WINDOW_WIDTH // 5,
@@ -57,14 +57,12 @@ class SeriousPySam(Game):
         for enemy in enemies:
             self.enemies.append(enemy)
 
-    def create_labels(self):
-        score_label = TextObject(c.LABEL_SCORE_X,
-                                 c.LABEL_SCORE_Y,
-                                 lambda: f'Score: {self.score}',
-                                 c.LABEL_TEXT_COLOR,
-                                 c.LABEL_FONT_NAME,
-                                 c.LABEL_FONT_SIZE)
-        self.hud_objects.append(score_label)
+    def create_start_labels(self):
+        self.create_label(c.LABEL_SCORE_POS[0], c.LABEL_SCORE_POS[1], lambda: f'Score: {self.score}')
+
+    def create_label(self, x, y, text):
+        label = TextObject(x, y, text, c.LABEL_TEXT_COLOR, c.LABEL_FONT_NAME, c.LABEL_FONT_SIZE)
+        self.hud_objects.append(label)
 
     def resume_game(self):
         self.pause_menu.toggle()
