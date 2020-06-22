@@ -58,6 +58,7 @@ class SeriousPySam(Game):
             self.enemies.append(enemy)
 
     def create_start_labels(self):
+        self.create_label(c.LABEL_HERO_POS[0], c.LABEL_HERO_POS[1], lambda: f'HP: {self.hero.health}')
         self.create_label(c.LABEL_SCORE_POS[0], c.LABEL_SCORE_POS[1], lambda: f'Score: {self.score}')
 
     def create_label(self, x, y, text):
