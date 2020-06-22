@@ -141,6 +141,11 @@ class SeriousPySam(Game):
                                c.hero_start_level_random_dialog(),
                                self.channel_enemy_sound)
             self.enemies.append(self.boss)
+
+            self.create_label(c.LABEL_BOSS_HP_POS[0],
+                              c.LABEL_BOSS_HP_POS[1],
+                              lambda: f'Boss: {self.boss.health}')
+
             pygame.mixer.music.load(c.BOSS_MUSIC)
             pygame.mixer.music.play(-1)
 
