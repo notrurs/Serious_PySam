@@ -24,7 +24,7 @@ class SeriousPySam(Game):
     def create_objects(self):
         self.create_hero()
         self.create_enemy(c.ENEMY_COUNT)
-        self.create_labels()
+        self.create_start_labels()
 
     def create_hero(self):
         hero = Hero(c.WINDOW_WIDTH // 5,
@@ -57,14 +57,13 @@ class SeriousPySam(Game):
         for enemy in enemies:
             self.enemies.append(enemy)
 
-    def create_labels(self):
-        score_label = TextObject(c.LABEL_SCORE_X,
-                                 c.LABEL_SCORE_Y,
-                                 lambda: f'Score: {self.score}',
-                                 c.LABEL_TEXT_COLOR,
-                                 c.LABEL_FONT_NAME,
-                                 c.LABEL_FONT_SIZE)
-        self.hud_objects.append(score_label)
+    def create_start_labels(self):
+        self.create_label(c.LABEL_HERO_POS[0], c.LABEL_HERO_POS[1], lambda: f'HP: {self.hero.health}')
+        self.create_label(c.LABEL_SCORE_POS[0], c.LABEL_SCORE_POS[1], lambda: f'Score: {self.score}')
+
+    def create_label(self, x, y, text):
+        label = TextObject(x, y, text, c.LABEL_TEXT_COLOR, c.LABEL_FONT_NAME, c.LABEL_FONT_SIZE)
+        self.hud_objects.append(label)
 
     def resume_game(self):
         self.pause_menu.toggle()
@@ -98,7 +97,8 @@ class SeriousPySam(Game):
                             spawn_bullet_y,
                             c.BULLET_MINIGUN_IMAGE,
                             c.BULLET_SPEED,
-                            c.BULLET_MINIGUN_SOUND)
+                            c.BULLET_MINIGUN_SOUND,
+                            c.HERO_DAMAGE)
             self.objects.append(bullet)
             self.bullets.append(bullet)
             self.channel_hero_fire.play(bullet.sound)
@@ -120,14 +120,29 @@ class SeriousPySam(Game):
         if obj in self.enemy_bullets:
             self.enemy_bullets.remove(obj)
 
-    def handle_bullets_collisions(self):
+    def handle_hero_bullets_collisions(self):
         for bullet in self.bullets:
             for enemy in self.enemies:
                 if bullet.rect.colliderect(enemy.rect):
-                    self.score += 100
+                    enemy.health -= bullet.damage
                     self.kill_object(bullet)
+                    if enemy.health <= 0:
+                        self.score += 100
+                        self.kill_object(enemy)
+                        self.create_enemy()
+
+    def handle_enemy_bullets_collisions(self):
+        for bullet in self.enemy_bullets:
+            if bullet.rect.colliderect(self.hero.rect):
+                self.hero.get_damage(bullet.damage)
+                self.kill_object(bullet)
+
+    def handle_enemy_collision(self):
+        for enemy in self.enemies:
+            if enemy.rect.colliderect(self.hero.rect):
+                self.hero.get_damage(enemy.damage)
+                if isinstance(enemy, Kamikaze):
                     self.kill_object(enemy)
-                    self.create_enemy()
 
     def handle_boss_spawn(self):
         if not self.is_boss_spawn and self.score >= 500:
@@ -140,6 +155,11 @@ class SeriousPySam(Game):
                                c.hero_start_level_random_dialog(),
                                self.channel_enemy_sound)
             self.enemies.append(self.boss)
+
+            self.create_label(c.LABEL_BOSS_HP_POS[0],
+                              c.LABEL_BOSS_HP_POS[1],
+                              lambda: f'Boss: {self.boss.health}')
+
             pygame.mixer.music.load(c.BOSS_MUSIC)
             pygame.mixer.music.play(-1)
 
@@ -162,7 +182,8 @@ class SeriousPySam(Game):
                                     rand_bullet[1],
                                     self.boss.boss_bullets_images[bullet_num],
                                     -c.BOSS_BULLET_SPEED,
-                                    c.BULLET_MINIGUN_SOUND)
+                                    c.BULLET_MINIGUN_SOUND,
+                                    self.boss.bullets_damages[bullet_num])
                     self.enemy_bullets.append(bullet)
                     self.boss.attack2_current_steps += 1
                     if self.boss.attack2_current_steps >= self.boss.attack2_steps:
@@ -181,6 +202,7 @@ class SeriousPySam(Game):
                                     self.boss.boss_bullets_images[bullet_num],
                                     -c.BOSS_BULLET_SPEED,
                                     c.BULLET_MINIGUN_SOUND,
+                                    self.boss.bullets_damages[bullet_num],
                                     (hero_pos, bullet_pos))
                     self.enemy_bullets.append(bullet)
 
@@ -188,9 +210,11 @@ class SeriousPySam(Game):
 
     def update(self):
         self.handle_bullets()
-        self.handle_bullets_collisions()
+        self.handle_hero_bullets_collisions()
+        self.handle_enemy_bullets_collisions()
         self.handle_boss_spawn()
         self.handle_boss_attacks()
+        self.handle_enemy_collision()
         self.garbage_collector()
         super().update()
 

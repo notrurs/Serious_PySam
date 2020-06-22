@@ -1,4 +1,5 @@
 import pygame
+from time import monotonic
 
 import serious_pysam.config as c
 from serious_pysam.game_object.game_object import GameObject
@@ -9,6 +10,7 @@ class Hero(GameObject):
         GameObject.__init__(self, x, y, picture, speed, sound, channel)
         self.hero_idle = self.image_object
         self.hero_fire = pygame.image.load(c.HERO_FIRE_IMAGE).convert_alpha()
+        self.health = c.HERO_HP
         self.moving_left = False
         self.moving_right = False
         self.moving_up = False
@@ -17,6 +19,8 @@ class Hero(GameObject):
         self.state = 'idle'
         self.permitted_x = c.WINDOW_WIDTH - self.rect.w
         self.permitted_y = c.WINDOW_HEIGHT - self.rect.h - c.HERO_SPEED
+        self.immortality_time = c.HERO_IMMORTALITY_TIME
+        self.time_get_damage = monotonic()
 
     # handler for keyboard
     def handle(self, key):
@@ -35,6 +39,11 @@ class Hero(GameObject):
             self.state = 'fire'
         elif event_type == pygame.MOUSEBUTTONUP:
             self.state = 'idle'
+
+    def get_damage(self, damage):
+        if monotonic() - self.time_get_damage >= self.immortality_time:
+            self.health -= damage
+            self.time_get_damage = monotonic()
 
     def update(self):
         dx = dy = 0
