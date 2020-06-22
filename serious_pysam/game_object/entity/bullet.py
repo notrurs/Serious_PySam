@@ -8,9 +8,10 @@ from serious_pysam.game_object.game_object import GameObject
 
 
 class Bullet(GameObject):
-    def __init__(self, x, y, picture, speed, sound, objects_positions=None):
+    def __init__(self, x, y, picture, speed, sound, damage, objects_positions=None):
         GameObject.__init__(self, x, y, picture, speed, sound)
         self.speed = (speed, 0)
+        self.damage = damage
         self.obj_pos = objects_positions
         self.rotate_bullet(objects_positions)
 
