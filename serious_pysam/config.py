@@ -45,6 +45,7 @@ MENU_CONTROL_LABEL = '''Управление клавишами WASD, стрел
 HERO_SPEED = 5
 HERO_FIRE_IMAGE = str(_IMAGES_DIR / 'hero_fire.png')
 HERO_IDLE_IMAGE = str(_IMAGES_DIR / 'hero_idle.png')
+HERO_DAMAGE = 15
 HERO_FIRE_VOLUME = 0.4
 HERO_DIALOG_VOLUME = 1.0
 HERO_START_LEVEL_DIALOGS = ['i_am_ready_for_some_serious_carnage.wav',
@@ -72,11 +73,14 @@ ENEMY_KAMIKAZE_SOUND = str(_ENEMIES_DIR / 'kamikaze.wav')
 ENEMY_SOUND_VOLUME = 0.3
 ENEMY_SPAWN_START_X = 710
 ENEMY_SPAWN_END_Y = WINDOW_HEIGHT - 45  # 45 is enemy rect height
+ENEMY_KAMIKAZE_HP = 15
+ENEMY_KAMIKAZE_DAMAGE = 20
 
 # Boss settings
 BOSS_MUSIC = str(_MUSIC_DIR / 'LastFight.ogg')
 BOSS_SPAWN_X = WINDOW_WIDTH - 250  # 250 is boss rect width
 BOSS_SPAWN_Y = WINDOW_HEIGHT // 4
+BOSS_HP = 10000
 BOSS_IDLE_SPEED = 0
 BOSS_ATTACK_PERIOD = 5
 BOSS_END_X_ATTACK = 50
