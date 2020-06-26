@@ -4,6 +4,7 @@ from random import randint
 from serious_pysam import config as c
 from serious_pysam.game.game import Game
 from serious_pysam.menu.menu import MainMenu
+from serious_pysam.game_object.game_object import GameObject
 from serious_pysam.text_object.text_object import TextObject
 from serious_pysam.game_object.entity.bullet import Bullet
 from serious_pysam.game_object.entity.hero import Hero
@@ -61,8 +62,14 @@ class SeriousPySam(Game):
         self.create_label(c.LABEL_HERO_POS[0], c.LABEL_HERO_POS[1], lambda: f'HP: {self.hero.health}')
         self.create_label(c.LABEL_SCORE_POS[0], c.LABEL_SCORE_POS[1], lambda: f'Score: {self.score}')
 
-    def create_label(self, x, y, text):
-        label = TextObject(x, y, text, c.LABEL_TEXT_COLOR, c.LABEL_FONT_NAME, c.LABEL_FONT_SIZE)
+    def create_label(self, x, y, text, centralized=False):
+        label = TextObject(x,
+                           y,
+                           text,
+                           c.LABEL_TEXT_COLOR,
+                           c.LABEL_FONT_NAME,
+                           c.LABEL_FONT_SIZE,
+                           centralized=centralized)
         self.hud_objects.append(label)
 
     def resume_game(self):
@@ -208,6 +215,23 @@ class SeriousPySam(Game):
 
                 self.boss.stop_attack()
 
+    def handle_player_death(self):
+        if self.hero.health <= 0 and self.hero.is_hero_live:
+            self.hero.is_hero_live = False
+            self.hero.hero_death()
+            self.hud_objects.clear()
+            self.hero_objects.clear()
+            screen_death = GameObject(0, 0, c.SCREEN_DEATH_IMAGE)
+            self.hud_objects.append(screen_death)
+            self.create_label(c.WINDOW_WIDTH // 2,
+                              c.WINDOW_HEIGHT // 2 - 20,
+                              lambda: f'Тебя убили. Твои очки: {self.score}',
+                              centralized=True)
+            self.create_label(c.WINDOW_WIDTH // 2,
+                              c.WINDOW_HEIGHT // 2 + 20,
+                              lambda: f'ESC - выход в меню',
+                              centralized=True)
+
     def update(self):
         self.handle_bullets()
         self.handle_hero_bullets_collisions()
@@ -216,6 +240,7 @@ class SeriousPySam(Game):
         self.handle_boss_attacks()
         self.handle_enemy_collision()
         self.garbage_collector()
+        self.handle_player_death()
         super().update()
 
 
