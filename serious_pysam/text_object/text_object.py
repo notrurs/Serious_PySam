@@ -8,19 +8,21 @@ class TextObject:
                  text_func,
                  color,
                  font_name,
-                 font_size):
+                 font_size,
+                 centralized=False):
         self.x = x
         self.y = y
         self.text_func = text_func
         self.color = color
         self.font = pygame.font.Font(font_name, font_size)
         self.bounds = self.get_surface(text_func())
+        self.centralized = centralized
 
-    def blit(self, surface, centralized=False):
+    def blit(self, surface):
         text_surface, self.bounds = self.get_surface(self.text_func())
 
-        if centralized:
-            pos = (self.x - self.bounds.width // 2, self.y)
+        if self.centralized:
+            pos = (self.x - self.bounds.width // 2, self.y - self.bounds.height // 2)
         else:
             pos = (self.x, self.y)
 

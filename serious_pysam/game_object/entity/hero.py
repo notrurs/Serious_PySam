@@ -11,6 +11,7 @@ class Hero(GameObject):
         self.hero_idle = self.image_object
         self.hero_fire = pygame.image.load(c.HERO_FIRE_IMAGE).convert_alpha()
         self.health = c.HERO_HP
+        self.is_hero_live = True
         self.moving_left = False
         self.moving_right = False
         self.moving_up = False
@@ -24,26 +25,41 @@ class Hero(GameObject):
 
     # handler for keyboard
     def handle(self, key):
-        if key == pygame.K_w:
-            self.moving_up = not self.moving_up
-        elif key == pygame.K_s:
-            self.moving_down = not self.moving_down
-        elif key == pygame.K_a:
-            self.moving_left = not self.moving_left
-        elif key == pygame.K_d:
-            self.moving_right = not self.moving_right
+        if self.is_hero_live:
+            if key == pygame.K_w:
+                self.moving_up = not self.moving_up
+            elif key == pygame.K_s:
+                self.moving_down = not self.moving_down
+            elif key == pygame.K_a:
+                self.moving_left = not self.moving_left
+            elif key == pygame.K_d:
+                self.moving_right = not self.moving_right
 
     # handler for mouse
     def handle_mouse(self, event_type, pos):
-        if event_type == pygame.MOUSEBUTTONDOWN:
-            self.state = 'fire'
-        elif event_type == pygame.MOUSEBUTTONUP:
-            self.state = 'idle'
+        if self.is_hero_live:
+            if event_type == pygame.MOUSEBUTTONDOWN:
+                self.state = 'fire'
+            elif event_type == pygame.MOUSEBUTTONUP:
+                self.state = 'idle'
 
     def get_damage(self, damage):
-        if monotonic() - self.time_get_damage >= self.immortality_time:
-            self.health -= damage
-            self.time_get_damage = monotonic()
+        if self.is_hero_live:
+            if monotonic() - self.time_get_damage >= self.immortality_time:
+                self.health -= damage
+                self.time_get_damage = monotonic()
+
+    def hero_death(self):
+        self.is_hero_live = False
+        self.moving_up = False
+        self.moving_down = False
+        self.moving_left = False
+        self.moving_right = False
+        self.state = 'idle'
+        self.speed = (0, 0)
+        self.hero_idle.set_alpha(0)
+        self.hero_fire.set_alpha(0)
+        self.image_object.set_alpha(0)
 
     def update(self):
         dx = dy = 0

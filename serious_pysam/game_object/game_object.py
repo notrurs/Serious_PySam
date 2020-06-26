@@ -9,8 +9,9 @@ class GameObject:
         self.rect.x = x
         self.rect.y = y
         self.speed = speed
-        self.sound = Sound(sound)
-        self.channel = channel
+        if sound is not None:
+            self.sound = Sound(sound)
+            self.channel = channel
 
     @property
     def x(self):

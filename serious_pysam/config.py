@@ -23,6 +23,7 @@ GAME_BACKGROUND_IMAGE = str(_IMAGES_DIR / 'desert.png')
 FRAME_RATE = 60
 MUSIC_FIGHT = str(_MUSIC_DIR / 'dunes_bfe.mp3')
 MUSIC_VOLUME = 0.6
+SCREEN_DEATH_IMAGE = str(_IMAGES_DIR / 'screen_death.png')
 
 # Menu settings
 MENU_HEIGHT = WINDOW_HEIGHT
