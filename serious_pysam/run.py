@@ -232,6 +232,23 @@ class SeriousPySam(Game):
                               lambda: f'ESC - выход в меню',
                               centralized=True)
 
+    def handle_win_game(self):
+        if self.hero.is_hero_live and self.boss is not None:
+            if self.boss.health <= 0:
+                self.boss.is_boss_live = False
+                self.hud_objects.clear()
+                self.enemies.clear()
+                screen_death = GameObject(0, 0, c.SCREEN_WIN_IMAGE)
+                self.hud_objects.append(screen_death)
+                self.create_label(c.WINDOW_WIDTH // 2,
+                                  c.WINDOW_HEIGHT // 2 - 20,
+                                  lambda: f'Ты победил! Твои очки: {self.score}',
+                                  centralized=True)
+                self.create_label(c.WINDOW_WIDTH // 2,
+                                  c.WINDOW_HEIGHT // 2 + 20,
+                                  lambda: f'ESC - выход в меню',
+                                  centralized=True)
+
     def update(self):
         self.handle_bullets()
         self.handle_hero_bullets_collisions()
@@ -241,6 +258,7 @@ class SeriousPySam(Game):
         self.handle_enemy_collision()
         self.garbage_collector()
         self.handle_player_death()
+        self.handle_win_game()
         super().update()
 
 
