@@ -25,6 +25,7 @@ class UghZan(GameObject):
         self.damage = BOSS_DAMAGE
         self.bullets_damages = BOSS_BULLETS_DAMAGES
         self.attack_period = BOSS_ATTACK_PERIOD
+        self.is_boss_live = True
         self.attack_state = 'idle'
         self.is_boss_fire = False
         self.permitted_x = BOSS_PERMITTED_POSITION_X
