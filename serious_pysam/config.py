@@ -1,3 +1,7 @@
+"""
+Main game settings
+"""
+
 from pathlib import Path
 from random import choice
 
@@ -61,6 +65,7 @@ HERO_START_LEVEL_DIALOGS = ['i_am_ready_for_some_serious_carnage.wav',
 
 
 def hero_start_level_random_dialog():
+    """Returns path for random start hero dialog"""
     return str(_HERO_DIR / choice(HERO_START_LEVEL_DIALOGS))
 
 
