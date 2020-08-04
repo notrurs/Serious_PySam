@@ -13,7 +13,9 @@ from serious_pysam.game_object.entity.ugh_zan import UghZan
 
 
 class SeriousPySam(Game):
+    """Main class for all project. Here's all game logic."""
     def __init__(self):
+        """Initialization main game params."""
         Game.__init__(self, c.WINDOW_CAPTION, c.WINDOW_WIDTH, c.WINDOW_HEIGHT, c.GAME_BACKGROUND_IMAGE, c.FRAME_RATE)
         self.score = 0
         self.hero = None
@@ -23,11 +25,13 @@ class SeriousPySam(Game):
         self.create_objects()
 
     def create_objects(self):
+        """Creates start game objects."""
         self.create_hero()
         self.create_enemy(c.ENEMY_COUNT)
         self.create_start_labels()
 
     def create_hero(self):
+        """Creates hero, add him to the hero_objects, add key handles."""
         hero = Hero(c.WINDOW_WIDTH // 5,
                     c.WINDOW_HEIGHT // 2,
                     c.HERO_IDLE_IMAGE,
@@ -49,6 +53,7 @@ class SeriousPySam(Game):
         self.hero_objects.append(self.hero)
 
     def create_enemy(self, count=1):
+        """Creates a given count enemy, adds each to enemies."""
         enemies = [Kamikaze(randint(c.ENEMY_SPAWN_START_X, c.WINDOW_WIDTH),
                             randint(0, c.ENEMY_SPAWN_END_Y),
                             c.ENEMY_KAMIKAZE_IMAGE,
@@ -59,10 +64,12 @@ class SeriousPySam(Game):
             self.enemies.append(enemy)
 
     def create_start_labels(self):
+        """Creates start labels: hp and score."""
         self.create_label(c.LABEL_HERO_POS[0], c.LABEL_HERO_POS[1], lambda: f'HP: {self.hero.health}')
         self.create_label(c.LABEL_SCORE_POS[0], c.LABEL_SCORE_POS[1], lambda: f'Score: {self.score}')
 
     def create_label(self, x, y, text, centralized=False):
+        """Creates label object and adds to hud_objects."""
         label = TextObject(x,
                            y,
                            text,
@@ -73,12 +80,15 @@ class SeriousPySam(Game):
         self.hud_objects.append(label)
 
     def resume_game(self):
+        """Resumes the game after menu."""
         self.pause_menu.toggle()
         pygame.mixer.music.set_volume(c.MUSIC_VOLUME)
         self.channels_set_volume()
         self.update()
 
     def finish_game(self):
+        """If user in menu exit from game, turn off game music, sets all params to
+         start values and call main menu."""
         self.channels_set_volume('mute')
         self.reinitializied_game()
         self.score = 0
@@ -86,6 +96,7 @@ class SeriousPySam(Game):
         self.create_main_menu()
 
     def handle_pause_menu(self, key):
+        """Handler for Escape button during the game, shows pause menu."""
         if key == pygame.K_ESCAPE:
             pygame.mixer.music.set_volume(c.MUSIC_VOLUME / 4)
             self.channels_set_volume('mute')
@@ -97,6 +108,7 @@ class SeriousPySam(Game):
             self.pause_menu.mainloop(self.surface)
 
     def handle_bullets(self):
+        """Handler for hero bullets."""
         if self.hero.state == 'fire':
             spawn_bullet_x = self.hero.rect.x + self.hero.rect.w - 12
             spawn_bullet_y = self.hero.rect.y + 21
@@ -111,6 +123,7 @@ class SeriousPySam(Game):
             self.channel_hero_fire.play(bullet.sound)
 
     def garbage_collector(self):
+        """If any object is off the screen, garbage collector will kill it."""
         for obj in self.objects:
             if not 0 <= obj.x <= c.WINDOW_WIDTH:
                 self.kill_object(obj)
@@ -118,6 +131,11 @@ class SeriousPySam(Game):
                 self.kill_object(obj)
 
     def kill_object(self, obj):
+        """Remove given object from all collections.
+
+        :param obj: object to delete
+
+        """
         if obj in self.objects:
             self.objects.remove(obj)
         if obj in self.enemies:
@@ -128,6 +146,7 @@ class SeriousPySam(Game):
             self.enemy_bullets.remove(obj)
 
     def handle_hero_bullets_collisions(self):
+        """Handler for hero bullets collisions with enemies."""
         for bullet in self.bullets:
             for enemy in self.enemies:
                 if bullet.rect.colliderect(enemy.rect):
@@ -139,12 +158,14 @@ class SeriousPySam(Game):
                         self.create_enemy()
 
     def handle_enemy_bullets_collisions(self):
+        """Handler for enemy bullets collisions with hero."""
         for bullet in self.enemy_bullets:
             if bullet.rect.colliderect(self.hero.rect):
                 self.hero.get_damage(bullet.damage)
                 self.kill_object(bullet)
 
     def handle_enemy_collision(self):
+        """Handler for enemy collisions with hero (when they collid)."""
         for enemy in self.enemies:
             if enemy.rect.colliderect(self.hero.rect):
                 self.hero.get_damage(enemy.damage)
@@ -152,6 +173,7 @@ class SeriousPySam(Game):
                     self.kill_object(enemy)
 
     def handle_boss_spawn(self):
+        """Handler for boss spawn. Checks current score and if it's equal to a certain value, then boss spawn."""
         if not self.is_boss_spawn and self.score >= 500:
             self.is_boss_spawn = True
             self.enemies = []
@@ -171,6 +193,7 @@ class SeriousPySam(Game):
             pygame.mixer.music.play(-1)
 
     def handle_boss_attacks(self):
+        """Handler for boss attacks. Checks current boss state and do something depending on his state."""
         if self.is_boss_spawn:
             if self.boss.attack_state == 'idle' and self.boss.get_time() % 6 == self.boss.attack_period:
                 self.boss.attack([*self.hero.center])
@@ -216,6 +239,7 @@ class SeriousPySam(Game):
                 self.boss.stop_attack()
 
     def handle_player_death(self):
+        """Handler for player death, ends the game."""
         if self.hero.health <= 0 and self.hero.is_hero_live:
             self.hero.is_hero_live = False
             self.hero.hero_death()
@@ -233,6 +257,7 @@ class SeriousPySam(Game):
                               centralized=True)
 
     def handle_win_game(self):
+        """Handler for boss death, ends the game."""
         if self.hero.is_hero_live and self.boss is not None:
             if self.boss.health <= 0:
                 self.boss.is_boss_live = False
@@ -250,6 +275,7 @@ class SeriousPySam(Game):
                                   centralized=True)
 
     def update(self):
+        """Extends super class method. Launches handlers, gc, then call super's update."""
         self.handle_bullets()
         self.handle_hero_bullets_collisions()
         self.handle_enemy_bullets_collisions()
@@ -263,6 +289,7 @@ class SeriousPySam(Game):
 
 
 def main():
+    """Starts the game."""
     SeriousPySam().run()
 
 
