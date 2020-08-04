@@ -8,12 +8,33 @@ from serious_pysam.menu.menu import MainMenu
 
 
 class Game:
+    """Main super class for Game object."""
     def __init__(self,
                  caption,
                  width,
                  height,
                  back_image_filename,
                  frame_rate):
+        """Game has own vars:
+        background_image - picture for background on the screen
+        frame_rate - pfs of the game
+        game_over - current state of game over
+        is_boss_spawn - current state boss spawn
+        objects - contains all game objects
+        enemies - contains only enemies objects
+        bullets - contains only bullets objects
+        enemy_bullets - contains only enemy_bullets objects
+        hud_objects - contains only hud_objects objects
+        hero_objects - contains only hero_objects objects
+        channel_hero_fire - sound channel for hero shooting
+        channel_hero_dialog - sound channel for hero dialog
+        channel_enemy_sound - sound channel for enemy sound
+        surface - screen object
+        keydown_handlers - dict with all button down handlers for keyboard buttons
+        keyup_handlers - dict with all button up handlers for keyboard buttons
+        mouse_handlers - dict with all handlers for mouse buttons
+
+        """
         self.background_image = pygame.image.load(back_image_filename)
         self.frame_rate = frame_rate
         self.game_over = False
@@ -40,6 +61,7 @@ class Game:
         self.mouse_handlers = defaultdict(list)
 
     def reinitializied_game(self):
+        """Sets params below to start values."""
         self.is_boss_spawn = False
         self.objects = []
         self.enemies = []
@@ -56,6 +78,12 @@ class Game:
         self.mouse_handlers = defaultdict(list)
 
     def channels_set_volume(self, volume='default'):
+        """Sets game volume.
+
+        :param volume: volume level
+        :type volume: str
+
+        """
         if volume == 'default':
             self.channel_hero_fire.set_volume(c.HERO_FIRE_VOLUME)
             self.channel_hero_dialog.set_volume(c.HERO_DIALOG_VOLUME)
@@ -66,14 +94,17 @@ class Game:
             self.channel_enemy_sound.set_volume(0)
 
     def update(self):
+        """Updates all objects on the screen."""
         for o in self.objects:
             o.update()
 
     def blit(self, surface):
+        """Blits all objects on the screen."""
         for o in self.objects:
             o.blit(surface)
 
     def handle_events(self):
+        """Handler for game events."""
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -91,6 +122,8 @@ class Game:
                     handler(event.type, event.pos)
 
     def start_game(self):
+        """Starts game. Turn ob music, blits and updates all objects, set fps and
+        checks handlers."""
         pygame.mixer.music.load(c.MUSIC_FIGHT)
         pygame.mixer.music.set_volume(c.MUSIC_VOLUME)
         pygame.mixer.music.play(-1)
@@ -110,6 +143,7 @@ class Game:
             self.clock.tick(self.frame_rate)
 
     def create_main_menu(self):
+        """Starts main menu and turn on menu music."""
         pygame.mixer.music.load(c.MENU_MUSIC)
         pygame.mixer.music.set_volume(c.MENU_MUSIC_VOLUME)
         pygame.mixer.music.play(-1)
@@ -126,8 +160,10 @@ class Game:
         menu.mainloop(self.surface)
 
     def background_function(self):
+        """Blits background for menu."""
         bg_img = pygame.image.load(c.MENU_BACKGROUND_IMAGE)
         self.surface.blit(bg_img, (0, 0))
 
     def run(self):
+        """Runs game."""
         self.create_main_menu()
