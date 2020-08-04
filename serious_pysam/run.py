@@ -174,7 +174,7 @@ class SeriousPySam(Game):
 
     def handle_boss_spawn(self):
         """Handler for boss spawn. Checks current score and if it's equal to a certain value, then boss spawn."""
-        if not self.is_boss_spawn and self.score >= 500:
+        if not self.is_boss_spawn and self.score >= c.BOSS_SPAWN_SCORE:
             self.is_boss_spawn = True
             self.enemies = []
             self.boss = UghZan(c.BOSS_SPAWN_X,
