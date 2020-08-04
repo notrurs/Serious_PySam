@@ -14,7 +14,22 @@ import serious_pysam.config as c
 
 
 class MainMenu(Menu):
+    """Menu class for main menu and pause menu.
+
+    This class depends on pygame_menu. For more details, see the docs:
+    https://github.com/ppizarror/pygame-menu
+
+    """
     def __init__(self):
+        """
+        _base_image - image for background
+        _selection - selection mode
+        _theme - how the menu will look
+        event_quit - event for quit from menu
+        event_back - event for back to previous menu
+        _menu_sound - object for menu music
+
+        """
         _base_image = BaseImage(image_path=c.MENU_BACKGROUND_IMAGE,
                                 drawing_mode=IMAGE_MODE_SIMPLE)
         _selection = NoneSelection()
@@ -42,7 +57,12 @@ class MainMenu(Menu):
 
 
 class MenuSound(Sound):
+    """Class for turning on music during menu."""
     def __init__(self):
+        """
+        _channel - pygame channel for music
+
+        """
         Sound.__init__(self)
         self._channel = Channel(3)
         self.set_sound(SOUND_TYPE_CLICK_MOUSE, c.MENU_SOUND_CLICK, volume=1.0)
