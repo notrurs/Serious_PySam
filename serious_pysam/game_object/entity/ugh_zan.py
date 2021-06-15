@@ -19,7 +19,7 @@ from serious_pysam.config import BOSS_BULLETS_DAMAGES
 class UghZan(GameObject):
     """Describes boss behaviour.
 
-    Boss can move in two axises and shoot. There is some interval between
+    Boss can move in two axes and shoot. There is some interval between
     boss's attacks. And he knows about his permitted area on the screen,
     so doesn't go beyond the screen.
 
