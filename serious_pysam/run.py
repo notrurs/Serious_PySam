@@ -1,5 +1,10 @@
-import pygame
+import sys
 from random import randint
+from pathlib import Path
+
+sys.path.append(str(Path().cwd().parent))
+
+import pygame
 
 from serious_pysam import config as c
 from serious_pysam.game.game import Game
